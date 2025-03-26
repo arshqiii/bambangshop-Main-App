@@ -78,27 +78,31 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
-1. In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber
-is defined as an interface. Explain based on your understanding of Observer design patterns,
-do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model
-struct is enough?
+1. In the Observer pattern diagram explained by the Head First Design Pattern book, Subscriber is defined as an interface. Explain based on your understanding of Observer design patterns, do we still need an interface (or trait in Rust) in this BambangShop case, or a single Model struct is enough?
 
     > Dari yang dijelaskan, subscriber dalam aplikasi BambangShop untuk saat ini hanya terdiri dari satu class, sehingga tidak perlu menambah interface/trait karena sudah cukup. Namun jika untuk kedepannya Bambangshop memiliki banyak jenis subscribers, maka alangkah baik untuk menggunakan interface karena akan bermanfaat dalam mengimplementasi subscriber yang berbeda sambil memastikan semuanya mematuhi aturan yang sama.
 
-2. id in Program and url in Subscriber is intended to be unique. Explain based on your
-understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently
-use is necessary for this case?
+2. id in Program and url in Subscriber is intended to be unique. Explain based on your understanding, is using Vec (list) sufficient or using DashMap (map/dictionary) like we currently use is necessary for this case?
 
     > Menurut saya penggunaan Dashmap pada implementasi tutorial ini lebih baik dibanding menggunakan Vec. Vec bisa digunakan asal data yang digunakan tidak terlalu besar namun untuk mendapat kinerja yang baik untuk manage data subscriber maka Dashmap lebih baik. Ini karena penggunaan Dashmap memiliki time complexity yang lebih baik dibanding Vec dengan O(1) dibanding O(n). Ini penting ketika nanti jumlah subscribers bertambah sehingga penggunaan Dashmap memungkinkan pencarian yang cepat dan dapat memastikan program tetap efisien.
 
-3. When programming using Rust, we are enforced by rigorous compiler constraints to make a
-thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we
-used the DashMap external library for thread safe HashMap. Explain based on your
-understanding of design patterns, do we still need DashMap or we can implement Singleton
-pattern instead?
+3. When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?
 
     > Dalam tutorial ini, singleton sudah diimplementasi melalui lazy_static, dan didalamnya digunakan Dashmap. Jadi dalam tutorial ini Dashmap dan Singleton di implementasi secara bersamaan. Singleton memiliki tujuan untuk memastikan bahwa hanya ada satu instance dari objek ketika program berjalan dan Dashmap sendiri merupakan sebuah versi dari Hashmap yang aman digunakan dalam kondisi multithreading. Jika Dashmap diganti dengan penerapan Singleton Hashmap maka tidak akan dipastikan keamanan dalam threading. Mempertahankan DashMap adalah pilihan desain yang lebih baik untuk sistem konkuren berkinerja tinggi. Jika keamanan dan kinerja thread tidak menjadi masalah, maka Singleton dengan HashMap normal sudah cukup.
 
 #### Reflection Publisher-2
+
+1. In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?
+
+    > Pemisahan terhadap Service dan Repository dapat dibalikkan kepada OO principle SRP atau Single Responsibility Principle. Ini karena jika Model menangani akses data sekaligus logika bisnis, kode akan menjadi sulit dikelola dan diperluas. Dengan memisahkan Repository dan Service, setiap bagian memiliki tugas yang lebih spesifik. Repository berfokus pada interaksi dengan database, sedangkan Service menangani logika bisnis. Pemisahan ini membuat kode lebih modular, mudah diuji, dan dapat dikembangkan tanpa mengubah banyak bagian dalam sistem.
+
+
+2. What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?
+
+    > Jika Model menangani semuanya tanpa pemisahan, kode akan semakin kompleks seiring bertambahnya fitur. Ketergantungan antar Model akan meningkat, sehingga perubahan kecil bisa berdampak besar ke seluruh sistem. Selain itu, kode yang berulang akan sulit dihindari karena setiap Model menangani logika bisnis sendiri tanpa adanya abstraksi yang jelas. Hal ini melanggar prinsip DRY, membuat proses refactoring lebih sulit, dan meningkatkan risiko kesalahan saat melakukan perubahan.
+
+3. Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects
+
+    > Sebelumnya saya pernah menggunakan Postman pada mata kuliah Pemrograman Berbasis Platform (PBP), Postman ini saya gunakan untuk test API endpoints secara efisien sehingga dapat menampilkan data dari endpoint tersebut dengan jelas. Fitur-fitur yang menurut saya menarik dan mungkin dapat membantu saya dalam proyek ini adalah Collections yang dapat membantu mengelompokkan request API yang berhubungan sehingga lebih mudah dikelola, dan juga fitur automated testing yang memungkinkan penambahan skrip pengujian otomatis untuk memastikan respons dari setiap endpoint sesuai dengan ekspektasi.
 
 #### Reflection Publisher-3

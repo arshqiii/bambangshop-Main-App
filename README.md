@@ -118,3 +118,4 @@ This is the place for you to write reflections:
 3. Explain what will happen to the program if we decide to not use multi-threading in the notification process.
 
     > Tanpa menggunakan multithreading pada proses notifikasi, aplikasi akan mengalami kesulitan menangani kasus dimana jumlah subscribers banyak, karena semua update harus dikirim secara bergantian dalam satu thread. Dengan menggunakan multithreading (dengan thread::spawn()), dapat memungkinkan pengiriman notifikasi dilakukan secara paralel sehingga tidak menghambat eksekusi utama aplikasi dan meningkatkan kinerja sistem.
+    

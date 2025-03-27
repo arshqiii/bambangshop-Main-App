@@ -109,6 +109,12 @@ This is the place for you to write reflections:
 
 1. Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?
 
+    > Dalam tutorial ini, Observer Pattern yang digunakan adalah Push Model, di mana publisher (sistem) secara aktif mengirimkan notifikasi ke subscribers setiap kali ada perubahan status produk. Hal ini terlihat dari implementasi pada NotificationService::notify(), di mana notifikasi dikirim secara langsung kepada subscribers melalui metode subscriber_clone.update(payload_clone).
+
 2. What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)
 
+    > Keuntungan dari memakai Pull Model dalam kasus ini dapat berupa mengurangi beban publisher karena tidak perlu langsung mengirimkan notifikasi ke setiap subscriber dan tiap subscriber dapat mengambil data sesuai dengan kebutuhan mereka. Namun kekurangannya terletak pada kasus dimana subscribers harus secara berkala mengambil (polling) data terbaru dari publisher untuk mengetahui perubahan status produk dan ini dapat mengurangi efisiensi karena subscribers harus terus-menerus mengecek perubahan, dibandingkan dengan Push Model yang langsung mengirim notifikasi begitu ada update.
+
 3. Explain what will happen to the program if we decide to not use multi-threading in the notification process.
+
+    > Tanpa menggunakan multithreading pada proses notifikasi, aplikasi akan mengalami kesulitan menangani kasus dimana jumlah subscribers banyak, karena semua update harus dikirim secara bergantian dalam satu thread. Dengan menggunakan multithreading (dengan thread::spawn()), dapat memungkinkan pengiriman notifikasi dilakukan secara paralel sehingga tidak menghambat eksekusi utama aplikasi dan meningkatkan kinerja sistem.
